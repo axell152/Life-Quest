@@ -347,3 +347,317 @@ button:disabled {
     width: 100%;
   }
 }
+
+/* ========================================
+   MA VIE - UNIVERS
+======================================== */
+
+.housePage {
+  animation: houseAppear .25s ease;
+}
+
+@keyframes houseAppear {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.houseHeader {
+  background: #101522;
+  border: 1px solid #222c3e;
+  border-radius: 18px;
+  padding: 22px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 16px;
+}
+
+.houseHeader h2 {
+  margin: 5px 0;
+  font-size: 28px;
+}
+
+.houseHeader p {
+  margin: 0;
+  color: #909db0;
+}
+
+.houseCoins {
+  background: #151c2b;
+  border: 1px solid #303b50;
+  padding: 11px 17px;
+  border-radius: 30px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+
+/* ========================================
+   MAISON
+======================================== */
+
+.houseWorld {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+
+  padding: 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #151c2b,
+      #0c111c
+    );
+
+  border: 1px solid #303b50;
+  border-radius: 22px;
+
+  box-shadow:
+    inset 0 0 40px rgba(0, 0, 0, .35);
+}
+
+
+/* ========================================
+   PIECES
+======================================== */
+
+.room {
+  min-height: 270px;
+
+  position: relative;
+
+  border: 1px solid #344156;
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  background: #111827;
+}
+
+
+/* SOL */
+
+.livingRoom {
+  background:
+    linear-gradient(
+      to bottom,
+      #151d2c 0%,
+      #151d2c 75%,
+      #252030 75%,
+      #252030 100%
+    );
+}
+
+
+/* CUISINE */
+
+.kitchen {
+  background:
+    linear-gradient(
+      to bottom,
+      #17202c 0%,
+      #17202c 75%,
+      #202a32 75%,
+      #202a32 100%
+    );
+}
+
+
+/* CHAMBRE */
+
+.bedroom {
+  background:
+    linear-gradient(
+      to bottom,
+      #181b2d 0%,
+      #181b2d 75%,
+      #282036 75%,
+      #282036 100%
+    );
+}
+
+
+/* BUREAU */
+
+.office {
+  background:
+    linear-gradient(
+      to bottom,
+      #121c2b 0%,
+      #121c2b 75%,
+      #1d2934 75%,
+      #1d2934 100%
+    );
+}
+
+
+/* ========================================
+   TITRE DE PIECE
+======================================== */
+
+.roomTitle {
+  position: absolute;
+
+  top: 12px;
+  left: 12px;
+
+  background: rgba(5, 8, 14, .8);
+
+  border: 1px solid #344156;
+
+  padding: 8px 12px;
+
+  border-radius: 10px;
+
+  font-weight: bold;
+  font-size: 14px;
+
+  z-index: 2;
+}
+
+
+/* ========================================
+   SOL
+======================================== */
+
+.roomFloor {
+  height: 100%;
+
+  padding: 65px 15px 15px;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  align-content: flex-start;
+  align-items: flex-end;
+
+  gap: 12px;
+}
+
+
+/* ========================================
+   OBJETS
+======================================== */
+
+.worldItem {
+  min-width: 90px;
+  min-height: 105px;
+
+  padding: 10px;
+
+  background: rgba(10, 14, 23, .82);
+
+  border: 1px solid #344156;
+
+  border-radius: 14px;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+
+  gap: 5px;
+
+  transition:
+    transform .15s ease,
+    border-color .15s ease;
+}
+
+.worldItem:hover {
+  transform: translateY(-4px);
+  border-color: #8b5cf6;
+}
+
+.worldEmoji {
+  font-size: 40px;
+  line-height: 1;
+}
+
+.worldItem strong {
+  font-size: 12px;
+}
+
+.worldItem small {
+  color: #909db0;
+  font-size: 11px;
+}
+
+
+/* ========================================
+   MAISON VIDE
+======================================== */
+
+.houseEmpty {
+  margin-top: 16px;
+
+  background: #101522;
+
+  border: 1px solid #222c3e;
+
+  border-radius: 18px;
+
+  padding: 35px 20px;
+
+  text-align: center;
+}
+
+.houseEmpty > div {
+  font-size: 65px;
+  margin-bottom: 10px;
+}
+
+.houseEmpty h3 {
+  margin: 5px 0 8px;
+}
+
+.houseEmpty p {
+  max-width: 500px;
+  margin: 0 auto 20px;
+
+  color: #909db0;
+  line-height: 1.5;
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 700px) {
+
+  .houseHeader {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+
+  .houseCoins {
+    text-align: center;
+  }
+
+  .houseWorld {
+    grid-template-columns: 1fr;
+  }
+
+  .room {
+    min-height: 240px;
+  }
+
+  .worldItem {
+    min-width: 80px;
+  }
+
+}
