@@ -349,7 +349,7 @@ button:disabled {
 }
 
 /* ========================================
-   MA VIE - UNIVERS
+   MA VIE — APPARTEMENT RPG
 ======================================== */
 
 .housePage {
@@ -373,12 +373,11 @@ button:disabled {
   border: 1px solid #222c3e;
   border-radius: 18px;
   padding: 22px;
+  margin-bottom: 16px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  margin-bottom: 16px;
 }
 
 .houseHeader h2 {
@@ -402,28 +401,30 @@ button:disabled {
 
 
 /* ========================================
-   MAISON
+   APPARTEMENT
 ======================================== */
 
 .houseWorld {
+  position: relative;
+
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  grid-template-rows: 1fr 1fr;
 
-  padding: 14px;
+  gap: 6px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #151c2b,
-      #0c111c
-    );
+  padding: 6px;
 
-  border: 1px solid #303b50;
-  border-radius: 22px;
+  min-height: 620px;
+
+  background: #080b12;
+
+  border: 3px solid #39465a;
+  border-radius: 18px;
 
   box-shadow:
-    inset 0 0 40px rgba(0, 0, 0, .35);
+    inset 0 0 50px rgba(0, 0, 0, .5),
+    0 10px 30px rgba(0, 0, 0, .25);
 }
 
 
@@ -432,116 +433,179 @@ button:disabled {
 ======================================== */
 
 .room {
-  min-height: 270px;
-
   position: relative;
 
-  border: 1px solid #344156;
-  border-radius: 18px;
+  min-height: 300px;
 
   overflow: hidden;
 
-  background: #111827;
+  border: 2px solid #39465a;
+
+  border-radius: 8px;
+
+  background: #171e2d;
 }
 
 
-/* SOL */
+/* murs */
+
+.room::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255,255,255,.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      rgba(255,255,255,.025) 1px,
+      transparent 1px
+    );
+
+  background-size: 28px 28px;
+}
+
+
+/* ========================================
+   SOLS
+======================================== */
 
 .livingRoom {
   background:
     linear-gradient(
       to bottom,
-      #151d2c 0%,
-      #151d2c 75%,
-      #252030 75%,
-      #252030 100%
+      #20293a 0%,
+      #20293a 72%,
+      #4a3940 72%,
+      #4a3940 100%
     );
 }
-
-
-/* CUISINE */
 
 .kitchen {
   background:
     linear-gradient(
       to bottom,
-      #17202c 0%,
-      #17202c 75%,
-      #202a32 75%,
-      #202a32 100%
+      #1d2834 0%,
+      #1d2834 72%,
+      #354047 72%,
+      #354047 100%
     );
 }
-
-
-/* CHAMBRE */
 
 .bedroom {
   background:
     linear-gradient(
       to bottom,
-      #181b2d 0%,
-      #181b2d 75%,
-      #282036 75%,
-      #282036 100%
+      #22243a 0%,
+      #22243a 72%,
+      #493c55 72%,
+      #493c55 100%
     );
 }
-
-
-/* BUREAU */
 
 .office {
   background:
     linear-gradient(
       to bottom,
-      #121c2b 0%,
-      #121c2b 75%,
-      #1d2934 75%,
-      #1d2934 100%
+      #1b2935 0%,
+      #1b2935 72%,
+      #39463e 72%,
+      #39463e 100%
     );
 }
 
 
 /* ========================================
-   TITRE DE PIECE
+   TITRE DES PIECES
 ======================================== */
 
 .roomTitle {
   position: absolute;
 
-  top: 12px;
-  left: 12px;
+  top: 10px;
+  left: 10px;
 
-  background: rgba(5, 8, 14, .8);
+  z-index: 5;
 
-  border: 1px solid #344156;
+  padding: 7px 11px;
 
-  padding: 8px 12px;
+  background: rgba(5, 8, 14, .88);
 
-  border-radius: 10px;
+  border: 1px solid #45536a;
 
+  border-radius: 9px;
+
+  font-size: 13px;
   font-weight: bold;
-  font-size: 14px;
 
-  z-index: 2;
+  box-shadow:
+    0 4px 12px rgba(0,0,0,.25);
 }
 
 
 /* ========================================
-   SOL
+   FENETRE DECORATIVE
+======================================== */
+
+.room::after {
+  content: "";
+
+  position: absolute;
+
+  top: 15px;
+  right: 18px;
+
+  width: 70px;
+  height: 48px;
+
+  border: 4px solid #46556b;
+
+  background:
+    linear-gradient(
+      135deg,
+      #263a55,
+      #182333
+    );
+
+  box-shadow:
+    inset 0 0 0 2px #101722;
+
+  opacity: .8;
+}
+
+
+/* ========================================
+   SOL / OBJETS
 ======================================== */
 
 .roomFloor {
+  position: relative;
+
+  z-index: 3;
+
   height: 100%;
 
-  padding: 65px 15px 15px;
+  padding:
+    70px
+    18px
+    18px;
 
   display: flex;
+
   flex-wrap: wrap;
 
-  align-content: flex-start;
+  align-content: flex-end;
+
   align-items: flex-end;
 
-  gap: 12px;
+  gap: 14px;
 }
 
 
@@ -550,40 +614,56 @@ button:disabled {
 ======================================== */
 
 .worldItem {
-  min-width: 90px;
-  min-height: 105px;
+  min-width: 82px;
+  min-height: 95px;
 
-  padding: 10px;
+  padding: 9px;
 
-  background: rgba(10, 14, 23, .82);
+  background: rgba(9, 13, 21, .88);
 
-  border: 1px solid #344156;
+  border: 1px solid #46536a;
 
-  border-radius: 14px;
+  border-radius: 12px;
 
   display: flex;
+
   flex-direction: column;
 
   justify-content: center;
+
   align-items: center;
 
   text-align: center;
 
   gap: 5px;
 
+  box-shadow:
+    0 6px 12px rgba(0,0,0,.25);
+
   transition:
     transform .15s ease,
-    border-color .15s ease;
+    border-color .15s ease,
+    background .15s ease;
 }
 
 .worldItem:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px) scale(1.03);
+
   border-color: #8b5cf6;
+
+  background: rgba(18, 23, 36, .95);
 }
 
 .worldEmoji {
-  font-size: 40px;
+  font-size: 42px;
+
   line-height: 1;
+
+  filter:
+    drop-shadow(
+      0 5px 5px
+      rgba(0,0,0,.35)
+    );
 }
 
 .worldItem strong {
@@ -616,6 +696,7 @@ button:disabled {
 
 .houseEmpty > div {
   font-size: 65px;
+
   margin-bottom: 10px;
 }
 
@@ -625,9 +706,11 @@ button:disabled {
 
 .houseEmpty p {
   max-width: 500px;
+
   margin: 0 auto 20px;
 
   color: #909db0;
+
   line-height: 1.5;
 }
 
@@ -640,7 +723,9 @@ button:disabled {
 
   .houseHeader {
     flex-direction: column;
+
     align-items: stretch;
+
     gap: 15px;
   }
 
@@ -650,14 +735,19 @@ button:disabled {
 
   .houseWorld {
     grid-template-columns: 1fr;
+
+    grid-template-rows: auto;
+
+    min-height: auto;
   }
 
   .room {
-    min-height: 240px;
+    min-height: 260px;
   }
 
   .worldItem {
-    min-width: 80px;
+    min-width: 75px;
   }
 
 }
+
