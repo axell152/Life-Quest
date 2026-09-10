@@ -739,13 +739,7 @@ const houseLevel = getHouseLevel(player.level);
 
   </div>
 
-  <div className="houseCoins">
-    🪙 {player.coins}
-  </div>
-
-</div>
-
-      <div className="houseCoins">
+       <div className="houseCoins">
         🪙 {player.coins}
       </div>
 
