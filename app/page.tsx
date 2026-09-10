@@ -600,67 +600,261 @@ export default function Home() {
 
       {tab === "maison" && (
 
-        <section className="card">
+  <section className="housePage">
 
-          <h2>
-            🏠 Ma vie
-          </h2>
+    <div className="houseHeader">
 
-          <p>
-            Tout ce que tu achètes
-            construit ton univers.
-          </p>
+      <div>
+        <div className="level">
+          TON UNIVERS
+        </div>
 
-          <div className="house">
+        <h2>
+          🏠 Ma vie
+        </h2>
 
-            {inventory.length === 0 ? (
+        <p>
+          Construis progressivement la vie
+          de ton personnage.
+        </p>
+      </div>
 
-              <div className="empty">
+      <div className="houseCoins">
+        🪙 {player.coins}
+      </div>
 
-                🏚️
+    </div>
 
-                <h3>
-                  Ta maison est vide.
-                </h3>
 
-                <p>
-                  Va dans la boutique
-                  acheter ton premier objet.
-                </p>
+    <div className="houseWorld">
+
+      {/* SALON */}
+
+      <div className="room livingRoom">
+
+        <div className="roomTitle">
+          🛋️ Salon
+        </div>
+
+        <div className="roomFloor">
+
+          {inventory
+            .filter((item) =>
+              [
+                "salon",
+                "living",
+                "meuble",
+                "decoration"
+              ].includes(
+                item.category?.toLowerCase()
+              )
+            )
+            .map((item) => (
+
+              <div
+                className="worldItem"
+                key={item.item_id}
+              >
+
+                <div className="worldEmoji">
+                  {item.emoji}
+                </div>
+
+                <strong>
+                  {item.name}
+                </strong>
+
+                <small>
+                  x{item.quantity}
+                </small>
 
               </div>
 
-            ) : (
+            ))}
 
-              inventory.map((item) => (
+        </div>
 
-                <div
-                  className="houseItem"
-                  key={item.item_id}
-                >
+      </div>
 
-                  <div>
-                    {item.emoji}
-                  </div>
 
-                  <strong>
-                    {item.name}
-                  </strong>
+      {/* CUISINE */}
 
-                  <small>
-                    x{item.quantity}
-                  </small>
+      <div className="room kitchen">
 
+        <div className="roomTitle">
+          🍳 Cuisine
+        </div>
+
+        <div className="roomFloor">
+
+          {inventory
+            .filter((item) =>
+              [
+                "cuisine",
+                "kitchen"
+              ].includes(
+                item.category?.toLowerCase()
+              )
+            )
+            .map((item) => (
+
+              <div
+                className="worldItem"
+                key={item.item_id}
+              >
+
+                <div className="worldEmoji">
+                  {item.emoji}
                 </div>
 
-              ))
+                <strong>
+                  {item.name}
+                </strong>
 
-            )}
+                <small>
+                  x{item.quantity}
+                </small>
 
-          </div>
+              </div>
 
-        </section>
-      )}
+            ))}
+
+        </div>
+
+      </div>
+
+
+      {/* CHAMBRE */}
+
+      <div className="room bedroom">
+
+        <div className="roomTitle">
+          🛏️ Chambre
+        </div>
+
+        <div className="roomFloor">
+
+          {inventory
+            .filter((item) =>
+              [
+                "chambre",
+                "bedroom",
+                "lit"
+              ].includes(
+                item.category?.toLowerCase()
+              )
+            )
+            .map((item) => (
+
+              <div
+                className="worldItem"
+                key={item.item_id}
+              >
+
+                <div className="worldEmoji">
+                  {item.emoji}
+                </div>
+
+                <strong>
+                  {item.name}
+                </strong>
+
+                <small>
+                  x{item.quantity}
+                </small>
+
+              </div>
+
+            ))}
+
+        </div>
+
+      </div>
+
+
+      {/* BUREAU */}
+
+      <div className="room office">
+
+        <div className="roomTitle">
+          💻 Bureau
+        </div>
+
+        <div className="roomFloor">
+
+          {inventory
+            .filter((item) =>
+              [
+                "bureau",
+                "office",
+                "travail"
+              ].includes(
+                item.category?.toLowerCase()
+              )
+            )
+            .map((item) => (
+
+              <div
+                className="worldItem"
+                key={item.item_id}
+              >
+
+                <div className="worldEmoji">
+                  {item.emoji}
+                </div>
+
+                <strong>
+                  {item.name}
+                </strong>
+
+                <small>
+                  x{item.quantity}
+                </small>
+
+              </div>
+
+            ))}
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    {inventory.length === 0 && (
+
+      <div className="houseEmpty">
+
+        <div>
+          🏚️
+        </div>
+
+        <h3>
+          Ta vie commence ici.
+        </h3>
+
+        <p>
+          Achète ton premier objet dans
+          la boutique pour commencer à
+          construire ton univers.
+        </p>
+
+        <button
+          onClick={() =>
+            setTab("boutique")
+          }
+        >
+          🛒 Aller à la boutique
+        </button>
+
+      </div>
+
+    )}
+
+  </section>
+
+)}
 
     </main>
   );
