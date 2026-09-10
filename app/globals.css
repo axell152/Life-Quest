@@ -751,3 +751,127 @@ button:disabled {
 
 }
 
+/* ========================================
+   PROGRESSION DE LA MAISON
+======================================== */
+
+.houseProgress {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  padding: 10px 14px;
+
+  background: #0b0f18;
+
+  border: 1px solid #29364b;
+
+  border-radius: 12px;
+}
+
+.houseProgress strong {
+  font-size: 14px;
+}
+
+.houseProgress span {
+  color: #909db0;
+  font-size: 12px;
+}
+
+
+/* ========================================
+   TIER 1 — PETIT STUDIO
+======================================== */
+
+.houseTier1 {
+  border-color: #39465a;
+}
+
+.houseTier1 .room {
+  filter: brightness(.9);
+}
+
+
+/* ========================================
+   TIER 2 — APPARTEMENT
+======================================== */
+
+.houseTier2 {
+  border-color: #4c5b73;
+}
+
+.houseTier2 .room {
+  background-blend-mode: soft-light;
+}
+
+
+/* ========================================
+   TIER 3 — MAISON
+======================================== */
+
+.houseTier3 {
+  border-color: #6d5a83;
+
+  box-shadow:
+    inset 0 0 50px rgba(139, 92, 246, .08),
+    0 10px 30px rgba(0,0,0,.25);
+}
+
+.houseTier3 .room {
+  border-color: #514463;
+}
+
+
+/* ========================================
+   TIER 4 — GRANDE MAISON
+======================================== */
+
+.houseTier4 {
+  border-color: #8b5cf6;
+
+  box-shadow:
+    inset 0 0 60px rgba(139, 92, 246, .12),
+    0 10px 35px rgba(139, 92, 246, .12);
+}
+
+.houseTier4 .room {
+  border-color: #67517d;
+}
+
+.houseTier4 .worldItem {
+  border-color: #51446b;
+}
+
+
+/* ========================================
+   TIER 5 — DOMAINE
+======================================== */
+
+.houseTier5 {
+  border-color: #c084fc;
+
+  box-shadow:
+    inset 0 0 80px rgba(192, 132, 252, .15),
+    0 10px 45px rgba(139, 92, 246, .2);
+}
+
+.houseTier5 .room {
+  border-color: #795b91;
+}
+
+.houseTier5 .worldItem {
+  border-color: #715583;
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 700px) {
+
+  .houseProgress {
+    width: 100%;
+  }
+
+}
