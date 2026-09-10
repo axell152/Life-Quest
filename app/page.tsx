@@ -328,6 +328,58 @@ function getRoom(item: Item) {
 
   return "salon";
 }
+
+function getHouseLevel(level: number) {
+  if (level >= 11) {
+    return {
+      name: "Domaine",
+      emoji: "🌆",
+      description:
+        "Tu possèdes maintenant un véritable domaine.",
+      className: "houseTier5"
+    };
+  }
+
+  if (level >= 8) {
+    return {
+      name: "Grande maison",
+      emoji: "🏰",
+      description:
+        "Ton univers commence à devenir impressionnant.",
+      className: "houseTier4"
+    };
+  }
+
+  if (level >= 5) {
+    return {
+      name: "Maison",
+      emoji: "🏡",
+      description:
+        "Tu as maintenant une vraie maison à construire.",
+      className: "houseTier3"
+    };
+  }
+
+  if (level >= 3) {
+    return {
+      name: "Appartement",
+      emoji: "🏠",
+      description:
+        "Ton premier véritable appartement.",
+      className: "houseTier2"
+    };
+  }
+
+  return {
+    name: "Petit studio",
+    emoji: "🏚️",
+    description:
+      "Un petit logement, mais c'est le début de ton aventure.",
+    className: "houseTier1"
+  };
+}
+
+const houseLevel = getHouseLevel(player.level);
   
   return (
     <main className="container">
@@ -650,20 +702,48 @@ function getRoom(item: Item) {
 
     <div className="houseHeader">
 
-      <div>
-        <div className="level">
-          TON UNIVERS
-        </div>
+  <div>
 
-        <h2>
-          🏠 Ma vie
-        </h2>
+    <div className="level">
+      TON UNIVERS
+    </div>
 
-        <p>
-          Construis progressivement ta vie
-          grâce aux objets que tu achètes.
-        </p>
-      </div>
+    <h2>
+      {houseLevel.emoji} {houseLevel.name}
+    </h2>
+
+    <p>
+      {houseLevel.description}
+    </p>
+
+  </div>
+
+  <div className="houseProgress">
+
+    <strong>
+      Niveau {player.level}
+    </strong>
+
+    <span>
+      Prochain logement :{" "}
+      {player.level < 3
+        ? "🏠 Appartement"
+        : player.level < 5
+        ? "🏡 Maison"
+        : player.level < 8
+        ? "🏰 Grande maison"
+        : player.level < 11
+        ? "🌆 Domaine"
+        : "✨ Niveau maximum"}
+    </span>
+
+  </div>
+
+  <div className="houseCoins">
+    🪙 {player.coins}
+  </div>
+
+</div>
 
       <div className="houseCoins">
         🪙 {player.coins}
@@ -672,7 +752,9 @@ function getRoom(item: Item) {
     </div>
 
 
-    <div className="houseWorld">
+    <div
+  className={`houseWorld ${houseLevel.className}`}
+>
 
       {/* SALON */}
 
