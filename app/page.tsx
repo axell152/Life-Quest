@@ -283,6 +283,52 @@ export default function Home() {
     (player.xp / xpNext) * 100
   );
 
+function normalizeText(value: string) {
+  return value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+function getRoom(item: Item) {
+  const category = normalizeText(item.category ?? "");
+  const name = normalizeText(item.name ?? "");
+
+  if (
+    category.includes("chambre") ||
+    category.includes("bedroom") ||
+    category.includes("lit") ||
+    name.includes("lit") ||
+    name.includes("bed")
+  ) {
+    return "chambre";
+  }
+
+  if (
+    category.includes("cuisine") ||
+    category.includes("kitchen") ||
+    name.includes("cuisine") ||
+    name.includes("four") ||
+    name.includes("frigo") ||
+    name.includes("refrigerateur")
+  ) {
+    return "cuisine";
+  }
+
+  if (
+    category.includes("bureau") ||
+    category.includes("office") ||
+    category.includes("travail") ||
+    name.includes("bureau") ||
+    name.includes("ordinateur") ||
+    name.includes("pc")
+  ) {
+    return "bureau";
+  }
+
+  return "salon";
+}
+  
   return (
     <main className="container">
 
@@ -598,7 +644,7 @@ export default function Home() {
 
       {/* MA VIE */}
 
-      {tab === "maison" && (
+{tab === "maison" && (
 
   <section className="housePage">
 
@@ -614,8 +660,8 @@ export default function Home() {
         </h2>
 
         <p>
-          Construis progressivement la vie
-          de ton personnage.
+          Construis progressivement ta vie
+          grâce aux objets que tu achètes.
         </p>
       </div>
 
@@ -639,15 +685,9 @@ export default function Home() {
         <div className="roomFloor">
 
           {inventory
-            .filter((item) =>
-              [
-                "salon",
-                "living",
-                "meuble",
-                "decoration"
-              ].includes(
-                item.category?.toLowerCase()
-              )
+            .filter(
+              (item) =>
+                getRoom(item) === "salon"
             )
             .map((item) => (
 
@@ -688,13 +728,9 @@ export default function Home() {
         <div className="roomFloor">
 
           {inventory
-            .filter((item) =>
-              [
-                "cuisine",
-                "kitchen"
-              ].includes(
-                item.category?.toLowerCase()
-              )
+            .filter(
+              (item) =>
+                getRoom(item) === "cuisine"
             )
             .map((item) => (
 
@@ -735,14 +771,9 @@ export default function Home() {
         <div className="roomFloor">
 
           {inventory
-            .filter((item) =>
-              [
-                "chambre",
-                "bedroom",
-                "lit"
-              ].includes(
-                item.category?.toLowerCase()
-              )
+            .filter(
+              (item) =>
+                getRoom(item) === "chambre"
             )
             .map((item) => (
 
@@ -783,14 +814,9 @@ export default function Home() {
         <div className="roomFloor">
 
           {inventory
-            .filter((item) =>
-              [
-                "bureau",
-                "office",
-                "travail"
-              ].includes(
-                item.category?.toLowerCase()
-              )
+            .filter(
+              (item) =>
+                getRoom(item) === "bureau"
             )
             .map((item) => (
 
