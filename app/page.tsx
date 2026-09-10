@@ -29,6 +29,49 @@ type Stats = {
   social: number;
 };
 
+type Quest = {
+  id: string;
+  name: string;
+  description: string;
+  xp: number;
+  coins: number;
+};
+
+const quests: Quest[] = [
+  {
+    id: "sport",
+    name: "Faire du sport",
+    description:
+      "Faire au moins 30 minutes d'activité physique.",
+    xp: 50,
+    coins: 25
+  },
+  {
+    id: "travail",
+    name: "Avancer sur un projet",
+    description:
+      "Consacrer du temps à un projet personnel ou professionnel.",
+    xp: 60,
+    coins: 30
+  },
+  {
+    id: "lecture",
+    name: "Lire",
+    description:
+      "Lire pendant au moins 20 minutes.",
+    xp: 40,
+    coins: 20
+  },
+  {
+    id: "routine",
+    name: "Tenir sa routine",
+    description:
+      "Accomplir une tâche importante de ta journée.",
+    xp: 30,
+    coins: 15
+  }
+];
+
 export default function Home() {
   const [player, setPlayer] =
     useState<Player | null>(null);
@@ -46,9 +89,9 @@ export default function Home() {
     useState("");
 
   const [tab, setTab] =
-    useState<"personnage" | "maison" | "boutique">(
-      "personnage"
-    );
+    useState<
+      "personnage" | "maison" | "boutique"
+    >("personnage");
 
   const [message, setMessage] =
     useState("");
@@ -56,17 +99,23 @@ export default function Home() {
   const [loading, setLoading] =
     useState(true);
 
+  const [questLoading, setQuestLoading] =
+    useState<string | null>(null);
+
   async function load() {
     try {
-      const [playerResponse, shopResponse] =
-        await Promise.all([
-          fetch("/api/player", {
-            cache: "no-store"
-          }),
-          fetch("/api/shop", {
-            cache: "no-store"
-          })
-        ]);
+      const [
+        playerResponse,
+        shopResponse
+      ] = await Promise.all([
+        fetch("/api/player", {
+          cache: "no-store"
+        }),
+
+        fetch("/api/shop", {
+          cache: "no-store"
+        })
+      ]);
 
       const playerData =
         await playerResponse.json();
@@ -76,9 +125,13 @@ export default function Home() {
 
       setPlayer(playerData.player);
       setStats(playerData.stats);
-      setInventory(playerData.inventory);
+      setInventory(
+        playerData.inventory
+      );
       setShop(shopData);
-      setPseudo(playerData.player.pseudo);
+      setPseudo(
+        playerData.player.pseudo
+      );
     } catch {
       setMessage(
         "Impossible de charger les données."
@@ -93,35 +146,102 @@ export default function Home() {
   }, []);
 
   async function savePseudo() {
-    await fetch("/api/player", {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        pseudo
-      })
-    });
+    const response =
+      await fetch("/api/player", {
+        method: "PATCH",
 
-    setMessage("Pseudo sauvegardé.");
-
-    load();
-  }
-
-  async function buy(itemId: string) {
-    const response = await fetch(
-      "/api/shop",
-      {
-        method: "POST",
         headers: {
           "Content-Type":
             "application/json"
         },
+
+        body: JSON.stringify({
+          pseudo
+        })
+      });
+
+    if (!response.ok) {
+      setMessage(
+        "Impossible de sauvegarder le pseudo."
+      );
+
+      return;
+    }
+
+    setMessage(
+      "Pseudo sauvegardé."
+    );
+
+    await load();
+  }
+
+  async function completeQuest(
+    questId: string
+  ) {
+    setQuestLoading(questId);
+    setMessage("");
+
+    try {
+      const response =
+        await fetch("/api/quest", {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+
+          body: JSON.stringify({
+            questId
+          })
+        });
+
+      const data =
+        await response.json();
+
+      if (!response.ok) {
+        setMessage(
+          data.error ||
+            "Impossible de terminer la quête."
+        );
+
+        return;
+      }
+
+      if (data.leveledUp) {
+        setMessage(
+          `🎉 Niveau ${data.player.level} ! +${data.reward.xp} XP et +${data.reward.coins} 🪙`
+        );
+      } else {
+        setMessage(
+          `✅ Quête terminée ! +${data.reward.xp} XP et +${data.reward.coins} 🪙`
+        );
+      }
+
+      await load();
+    } catch {
+      setMessage(
+        "Une erreur est survenue."
+      );
+    } finally {
+      setQuestLoading(null);
+    }
+  }
+
+  async function buy(itemId: string) {
+    const response =
+      await fetch("/api/shop", {
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+
         body: JSON.stringify({
           itemId
         })
-      }
-    );
+      });
 
     const data =
       await response.json();
@@ -135,7 +255,7 @@ export default function Home() {
       `🛍️ ${data.item} acheté !`
     );
 
-    load();
+    await load();
   }
 
   if (loading) {
@@ -155,7 +275,8 @@ export default function Home() {
   }
 
   const xpNext =
-    100 + (player.level - 1) * 50;
+    100 +
+    (player.level - 1) * 50;
 
   const xpPercent = Math.min(
     100,
@@ -230,6 +351,8 @@ export default function Home() {
 
         <section>
 
+          {/* PROFIL */}
+
           <div className="card">
 
             <div className="level">
@@ -241,11 +364,15 @@ export default function Home() {
               <input
                 value={pseudo}
                 onChange={(e) =>
-                  setPseudo(e.target.value)
+                  setPseudo(
+                    e.target.value
+                  )
                 }
               />
 
-              <button onClick={savePseudo}>
+              <button
+                onClick={savePseudo}
+              >
                 Sauvegarder
               </button>
 
@@ -256,15 +383,87 @@ export default function Home() {
             </div>
 
             <div className="xpBar">
+
               <div
                 style={{
                   width:
                     `${xpPercent}%`
                 }}
               />
+
             </div>
 
           </div>
+
+
+          {/* QUÊTES */}
+
+          <div className="card">
+
+            <h2>
+              🎯 Quêtes
+            </h2>
+
+            <p>
+              Accomplis des actions dans
+              ta vraie vie pour faire
+              progresser ton personnage.
+            </p>
+
+            <div className="quests">
+
+              {quests.map((quest) => (
+
+                <article
+                  className="quest"
+                  key={quest.id}
+                >
+
+                  <div className="questInfo">
+
+                    <h3>
+                      {quest.name}
+                    </h3>
+
+                    <p>
+                      {quest.description}
+                    </p>
+
+                    <div className="questReward">
+                      ⭐ +{quest.xp} XP
+                      <span>
+                        🪙 +{quest.coins}
+                      </span>
+                    </div>
+
+                  </div>
+
+                  <button
+                    onClick={() =>
+                      completeQuest(
+                        quest.id
+                      )
+                    }
+                    disabled={
+                      questLoading !== null
+                    }
+                  >
+                    {questLoading ===
+                    quest.id
+                      ? "..."
+                      : "Terminer"}
+                  </button>
+
+                </article>
+
+              ))}
+
+            </div>
+
+          </div>
+
+
+          {/* STATISTIQUES */}
 
           <div className="card">
 
@@ -276,33 +475,37 @@ export default function Home() {
 
               {Object.entries(
                 stats
-              ).map(([name, value]) => (
+              ).map(
+                ([name, value]) => (
 
-                <div
-                  className="stat"
-                  key={name}
-                >
+                  <div
+                    className="stat"
+                    key={name}
+                  >
 
-                  <div>
-                    {name}
+                    <div>
+                      {name}
+                    </div>
+
+                    <strong>
+                      {value}
+                    </strong>
+
+                    <div className="statBar">
+
+                      <div
+                        style={{
+                          width:
+                            `${value}%`
+                        }}
+                      />
+
+                    </div>
+
                   </div>
 
-                  <strong>
-                    {value}
-                  </strong>
-
-                  <div className="statBar">
-                    <div
-                      style={{
-                        width:
-                          `${value}%`
-                      }}
-                    />
-                  </div>
-
-                </div>
-
-              ))}
+                )
+              )}
 
             </div>
 
@@ -310,6 +513,9 @@ export default function Home() {
 
         </section>
       )}
+
+
+      {/* BOUTIQUE */}
 
       {tab === "boutique" && (
 
@@ -331,7 +537,8 @@ export default function Home() {
               const owned =
                 inventory.find(
                   (x) =>
-                    x.item_id === item.item_id
+                    x.item_id ===
+                    item.item_id
                 )?.quantity ?? 0;
 
               return (
@@ -356,9 +563,11 @@ export default function Home() {
                     </p>
 
                     {owned > 0 && (
+
                       <small>
                         Possédé : {owned}
                       </small>
+
                     )}
 
                   </div>
@@ -378,12 +587,16 @@ export default function Home() {
                 </article>
 
               );
+
             })}
 
           </div>
 
         </section>
       )}
+
+
+      {/* MA VIE */}
 
       {tab === "maison" && (
 
@@ -447,7 +660,6 @@ export default function Home() {
           </div>
 
         </section>
-
       )}
 
     </main>
